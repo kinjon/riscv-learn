@@ -1,16 +1,17 @@
 # RISCV Bare Metal Program Learning   
-## Development environment prepare  
-This porject can be used on the linux operating system, I used the Ubuntu22.04 operating system 
-### spike 
-[GitHub: riscv-isa-sim](https://github.com/riscv-software-src/riscv-isa-sim)
-You can get the source code on github for the link above.
+## Development environment prepare   
+This porject can be used on the linux operating system, I used the Ubuntu22.04 operating system   
+### spike   
+[GitHub: riscv-isa-sim](https://github.com/riscv-software-src/riscv-isa-sim)   
 
-Spike, the RISC-V ISA Simulator, implements a functional model of one or more RISC-V harts. It is named after the golden spike used to celebrate the completion of the US transcontinental railway.
+You can get the source code on github for the link above.   
+
+Spike, the RISC-V ISA Simulator, implements a functional model of one or more RISC-V harts. It is named after the golden spike used to celebrate the completion of the US transcontinental railway.   
 
 spike is supported for both riscv32 and riscv64. We can use option `--isa=rv32imafdc` and option `--isa=rv64imafdc`(default) to specify whether the current spike supports riscv32 or riscv64.   
 
-how to build and install spike:
-You can customize your spike's installation directory by using the `$RISCV` variable.
+how to build and install spike:   
+You can customize your spike's installation directory by using the `$RISCV` variable.   
 
 ```
 git clone https://github.com/riscv-software-src/riscv-isa-sim.git
@@ -21,19 +22,21 @@ cd build
 make
 [sudo] make install
 ```
-After you complete the installation, you need to add your spike's installation path to your `.bashrc` file.
 
-### pk
-[GitHub: rscv-pk](https://github.com/riscv-software-src/riscv-pk)
+After you complete the installation, you need to add your spike's installation path to your `.bashrc` file.   
 
-You can get the source code on github for the link above.
+### pk   
+[GitHub: rscv-pk](https://github.com/riscv-software-src/riscv-pk)   
 
-The RISC-V Proxy Kernel, pk, is a lightweight application execution environment that can host statically-linked RISC-V ELF binaries. It is designed to support tethered RISC-V implementations with limited I/O capability and thus handles I/O-related system calls by proxying them to a host computer.
+You can get the source code on github for the link above.   
 
-This package also contains the Berkeley Boot Loader, bbl, which is a supervisor execution environment for tethered RISC-V systems. It is designed to host the RISC-V Linux port.
+The RISC-V Proxy Kernel, pk, is a lightweight application execution environment that can host statically-linked RISC-V ELF binaries. It is designed to support tethered RISC-V implementations with limited I/O capability and thus handles I/O-related system calls by proxying them to a host computer.   
 
-How to build it:
-You can customize your pk's installation directory by using the `$RISCV` variable.
+This package also contains the Berkeley Boot Loader, bbl, which is a supervisor execution environment for tethered RISC-V systems. It is designed to host the RISC-V Linux port.   
+
+How to build it:   
+You can customize your pk's installation directory by using the `$RISCV` variable.   
+
 ```
 git clone https://github.com/riscv-software-src/riscv-pk.git
 cd riscv-pk
@@ -45,10 +48,11 @@ cd build
 make
 [sudo] make install
 ```
-The `pk` is an executable file of the riscv instruction architecture that you can execute using the `spike` emulator.
-Example, my riscv32 and riscv64 pk is installed on `~/.bin/pk/riscv32-unknown-elf/bin/pk` and `~/.bin/pk/riscv64-unknown-elf/bin/pk`. 
 
-If we were to execute the pk file directly using spike, the result would be as follows.
+The `pk` is an executable file of the riscv instruction architecture that you can execute using the `spike` emulator.   
+Example, my riscv32 and riscv64 pk is installed on `~/.bin/pk/riscv32-unknown-elf/bin/pk` and `~/.bin/pk/riscv64-unknown-elf/bin/pk`.    
+
+If we were to execute the pk file directly using spike, the result would be as follows.   
 
 ```
 $ spike ~/.bin/pk/riscv64-unknown-elf/bin/pk 
@@ -59,7 +63,7 @@ $ spike --isa=rv32imafdc  ~/.bin/pk/riscv32-unknown
 tell me what ELF to load!
 ```
 
-If we have a c code like:
+If we have a c code like:   
 
 ```
 // hello.c
@@ -71,13 +75,16 @@ int main()
 }
 ```
 
-compile use command like:
+compile use command like:   
+
 ```
 riscv32-unknown-elf-gcc hello.c -o hello_32
 
 riscv64-unknown-elf-gcc hello.c -o hello_64
 ```
-We can get output log like:
+
+We can get output log like:   
+
 ```
 $ spike --isa=rv32imafdc  ~/.bin/pk/riscv32-unknown
 -elf/bin/pk hello_32
@@ -89,30 +96,23 @@ Hello RISCV
 ```
 
 ### openocd   
-[GitHub: riscv-openocd](https://github.com/riscv-collab/riscv-openocd)
+[GitHub: riscv-openocd](https://github.com/riscv-collab/riscv-openocd)   
 
-You can get the source code on github for the link above.
+You can get the source code on github for the link above.   
 
-OpenOCD provides on-chip programming and debugging support with a
-layered architecture of JTAG interface and TAP support including:
+OpenOCD provides on-chip programming and debugging support with a layered architecture of JTAG interface and TAP support including:   
 
-- (X)SVF playback to facilitate automated boundary scan and FPGA/CPLD
-  programming;
-- debug target support (e.g. ARM, MIPS): single-stepping,
-  breakpoints/watchpoints, gprof profiling, etc;
-- flash chip drivers (e.g. CFI, NAND, internal flash);
-- embedded TCL interpreter for easy scripting.
+- (X)SVF playback to facilitate automated boundary scan and FPGA/CPLD programming;   
+- debug target support (e.g. ARM, MIPS): single-stepping, breakpoints/watchpoints, gprof profiling, etc;   
+- flash chip drivers (e.g. CFI, NAND, internal flash);   
+- embedded TCL interpreter for easy scripting.   
 
-Several network interfaces are available for interacting with OpenOCD:
-telnet, TCL, and GDB. The GDB server enables OpenOCD to function as a
-"remote target" for source-level debugging of embedded systems using
-the GNU GDB program (and the others who talk GDB protocol, e.g. IDA
-Pro).
+Several network interfaces are available for interacting with OpenOCD: telnet, TCL, and GDB. The GDB server enables OpenOCD to function as a "remote target" for source-level debugging of embedded systems using the GNU GDB program (and the others who talk GDB protocol, e.g. IDA Pro).   
 
-The [riscv-openocd](https://github.com/riscv-collab/riscv-openocd) is a fork of [OpenOCD](https://openocd.org/) that has RISC-V support.
+The [riscv-openocd](https://github.com/riscv-collab/riscv-openocd) is a fork of [OpenOCD](https://openocd.org/) that has RISC-V support.   
 
-How to build the OpenOCD:
-We need enable the bitbang adapter for OpenOCD use the option `--enable-remote-bitbang`.
+How to build the OpenOCD:   
+We need enable the bitbang adapter for OpenOCD use the option `--enable-remote-bitbang`.   
 
 ```
 git clone https://github.com/riscv-collab/riscv-openocd.git
@@ -123,10 +123,12 @@ cd build
 make
 [sudo] make install
 ```
-After you complete the installation, you need to add your openocd's installation path to your `.bashrc` file.
 
-How to use OpenOCD's bitbang adapter combined with riscv's gdb to debug code executed by the spike emulator.
-Create the OpenOCD configuration file as follows.
+After you complete the installation, you need to add your openocd's installation path to your `.bashrc` file.   
+
+How to use OpenOCD's bitbang adapter combined with riscv's gdb to debug code executed by the spike emulator.   
+Create the OpenOCD configuration file as follows.   
+
 ```
 # openocd.cfg
 adapter driver remote_bitbang
@@ -145,13 +147,15 @@ $_TARGETNAME configure -work-area-phys 0x81000000 -work-area-size $_WORKAREASIZE
 
 gdb report_data_abort enable
 ```
-We use the remote bitband port:9824 to communicate with spike.
 
-The spike use option `--rbb-port=9824` to listen for remote bitbang connection on port 9824.
+We use the remote bitband port:9824 to communicate with spike.   
 
-If the code exits directly, remote bitbang will automatically shut down when the code exits, so we can use the `-H` option to halt the CPU before executing the code. Or we can put a loop in the code to ensure that the code does not exit after execution, so that the remote bitbang service can always work.
+The spike use option `--rbb-port=9824` to listen for remote bitbang connection on port 9824.   
 
-Detailed commands are as follows.
+If the code exits directly, remote bitbang will automatically shut down when the code exits, so we can use the `-H` option to halt the CPU before executing the code. Or we can put a loop in the code to ensure that the code does not exit after execution, so that the remote bitbang service can always work.   
+
+Detailed commands are as follows.   
+
 ```
 $ spike --rbb-port=9824 ~/.bin/pk/riscv64-unknown-e
 lf/bin/pk hello_64
@@ -205,8 +209,11 @@ Program received signal SIGINT, Interrupt.
 Continuing.
 remote_bitbang: socket closed by remote
 ```
-Since `pk` has an interrupt enabled, gdb `continue` needs to be executed several times in gdb for the code to complete the pk + hello_64 process. When the execution is complete, `spike` exits the remote bitbang listen process, so we can from the gdb terminal see messages: "remote_bitbang: socket closed by remote."
-If we want `spike` don't close the remote bitbang, wen can loop at the end of the `hello_64` code. like as follows.
+
+Since `pk` has an interrupt enabled, gdb `continue` needs to be executed several times in gdb for the code to complete the pk + hello_64 process. When the execution is complete, `spike` exits the remote bitbang listen process, so we can from the gdb terminal see messages: "remote_bitbang: socket closed by remote."   
+
+If we want `spike` don't close the remote bitbang, wen can loop at the end of the `hello_64` code. like as follows.   
+
 ```
 hello.c
 #include <stdio.h>
@@ -217,8 +224,9 @@ int main()
     return 0;
 }
 ```
-### toolchain
-[GitHub: riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain)
 
-You can get the riscv gnu toolchain on github for the link above. You can also get the riscv gnu toolchain in other ways. Note that the toolchains used in the previous steps are the same as the toolchains you have installed in your system.
+### toolchain   
+[GitHub: riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain)   
+
+You can get the riscv gnu toolchain on github for the link above. You can also get the riscv gnu toolchain in other ways. Note that the toolchains used in the previous steps are the same as the toolchains you have installed in your system.   
 
