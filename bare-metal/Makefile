@@ -18,7 +18,7 @@ C_SRCS 		= $(wildcard $(SOURCE_DIR)/*.c)
 ASM_OBJS 	= $(ASM_SRCS:$(SOURCE_DIR)/%.S=$(BUILD_DIR)/%_asm.o)
 C_OBJS 		= $(C_SRCS:$(SOURCE_DIR)/%.c=$(BUILD_DIR)/%.o)
 
-APP_NAME = bare_metal
+APP_NAME = bare-metal
 
 all: clean prepare $(APP_NAME).elf $(APP_NAME).img
 
