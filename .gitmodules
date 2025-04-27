@@ -1,0 +1,3 @@
+[submodule "opene906"]
+	path = opene906
+	url = git@github.com:kinjon/opene906.git
